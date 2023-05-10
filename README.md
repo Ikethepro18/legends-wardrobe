@@ -8,10 +8,12 @@ Currently, Miclee has only released 1 template, and as such is the only one curr
 There's a lot planned but here's what's coming in order of most likely to happen to least:
 1. More templates
 2. GUI
-3. Import your own skins
-4. Import your own models
-5. In app texture editor
-6. In app model editor (incredibly unlikely)
+3. Import downloaded heroes
+4. Import your own skins
+5. In app hero mod creator/packager
+6. Import your own models
+7. In app texture editor
+8. In app model editor (incredibly unlikely)
 
 ### Can I help?
 For the most part, I'm trying to make this a solo journey. I'm quite new to programming and I'm hoping this can expand my knowledge. If you have any ideas or issues absolutely be sure to let me know, no matter how small
