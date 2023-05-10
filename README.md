@@ -1,3 +1,12 @@
+# Not working? This may be it!
+The python program uses the 'request' library. This is not installed by default and so must be installed manually. To do so, press win+r to open the run dialogue and then type in `powershell` and press enter. Within powershell type `pip install request`. If it responds
+
+`ERROR: Could not find a version that satisfies the requirement request (from versions: none)`
+
+`ERROR: No matching distribution found for request`
+
+then it is already installed and you should open an issue so I can try and help
+
 ## What is Legend's Wardrobe?
 Legend's Wardrobe is a Python based program which imports hero templates created by [Miclee](https://github.com/Miclee7)
 
