@@ -16,7 +16,7 @@ Currently, Miclee has only released 1 template, and as such is the only one curr
 ### So what's comming in the future?
 There's a lot planned but here's what's coming in order of most likely to happen to least:
 1. More templates
-2. GUI
+2. ~~GUI~~
 3. Import downloaded heroes
 4. Import your own skins
 5. In app hero mod creator/packager
