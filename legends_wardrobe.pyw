@@ -16,7 +16,7 @@ def get_resource_path(relative_path):
     return str(base_path / relative_path)
 
 def install_hero():
-    urls = ["https://edge.forgecdn.net/files/4527/470/miclee_skin.zip", "https://edge.forgecdn.net/files/4521/823/universal_face.zip"]
+    urls = ["https://edge.forgecdn.net/files/4527/470/miclee_skin.zip", "https://github.com/LegendsModding/Jeb-Hero/files/11467695/jeb_ml_01.zip"]
     choice = choice_var.get()
     if choice not in [1, 2]: return messagebox.showerror("Error", "Invalid choice")
     folder = os.path.join(os.path.expanduser("~"), "AppData", "Roaming", "Minecraft Legends", "internalStorage", "premium_cache", "resource_packs")
@@ -67,8 +67,8 @@ root.iconbitmap(default=get_resource_path("icon.ico"))
 
 tk.Label(root, text="What hero would you like to install?").pack(anchor=tk.W)
 choice_var = tk.IntVar(value=1)
-tk.Radiobutton(root, text="Miclee skin", variable=choice_var, value=1).pack(anchor=tk.W)
-tk.Radiobutton(root, text="Universal face template", variable=choice_var, value=2).pack(anchor=tk.W)
+tk.Radiobutton(root, text="Miclee hero", variable=choice_var, value=1).pack(anchor=tk.W)
+tk.Radiobutton(root, text="Jeb_ hero", variable=choice_var, value=2).pack(anchor=tk.W)
 tk.Button(root, text="Install Hero", command=install_hero).pack(anchor=tk.W)
 
 root.mainloop()
