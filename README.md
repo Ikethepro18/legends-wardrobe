@@ -1,5 +1,7 @@
 # Not working? This may be it!
-The python program uses the 'request' library. This is not installed by default and so must be installed manually. To do so, press win+r to open the run dialogue and then type in `powershell` and press enter. Within powershell type `pip install request`. If it responds
+This program is Python based and requires Python to be installed to run. The compiled executable, however, does not need Python installed to run
+
+If you choose to run the Python script, uses the 'request' library. This is not installed by default and so must be installed manually. To do so, press win+r to open the run dialogue and then type in `powershell` and press enter. Within powershell type `pip install request`. If it responds
 
 `ERROR: Could not find a version that satisfies the requirement request (from versions: none)`
 
