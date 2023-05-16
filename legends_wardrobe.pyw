@@ -1,10 +1,13 @@
 import sys
-import ctypes
-import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog
-import urllib.request, zipfile, os, io, subprocess
+import os
+import urllib.request
+import zipfile
+import io
 import shutil
+import tkinter as tk
 import pathlib
+from tkinter import filedialog, messagebox, simpledialog
+from tkinter import ttk
 
 def get_resource_path(relative_path):
     """Get the absolute path to a resource, accounting for PyInstaller one-file mode"""
@@ -16,12 +19,21 @@ def get_resource_path(relative_path):
     return str(base_path / relative_path)
 
 def install_hero():
-    urls = ["https://edge.forgecdn.net/files/4527/470/miclee_skin.zip", "https://github.com/LegendsModding/Jeb-Hero/files/11467695/jeb_ml_01.zip"]
+    urls = [
+        "https://edge.forgecdn.net/files/4527/470/miclee_skin.zip",
+        "https://github.com/LegendsModding/Jeb-Hero/files/11467695/jeb_ml_01.zip"
+    ]
     choice = choice_var.get()
-    if choice not in [1, 2]: return messagebox.showerror("Error", "Invalid choice")
-    folder = os.path.join(os.path.expanduser("~"), "AppData", "Roaming", "Minecraft Legends", "internalStorage", "premium_cache", "resource_packs")
-    with urllib.request.urlopen(urls[choice - 1]) as response, zipfile.ZipFile(io.BytesIO(response.read())) as zip_ref: zip_ref.extractall(folder)
-    if not rename_folder(folder): return
+    if choice not in [1, 2]:
+        return messagebox.showerror("Error", "Invalid choice")
+    folder = os.path.join(
+        os.path.expanduser("~"), "AppData", "Roaming", "Minecraft Legends", "internalStorage", "premium_cache",
+        "resource_packs"
+    )
+    with urllib.request.urlopen(urls[choice - 1]) as response, zipfile.ZipFile(io.BytesIO(response.read())) as zip_ref:
+        zip_ref.extractall(folder)
+    if not rename_folder(folder):
+        return
 
 def rename_folder(folder_path):
     old_path = os.path.join(folder_path, os.listdir(folder_path)[0])
@@ -32,7 +44,9 @@ def rename_folder(folder_path):
             return
         new_path = os.path.join(folder_path, new_name)
         if os.path.exists(new_path):
-            choice = messagebox.askyesnocancel("Error", f"Folder '{new_name}' already exists. Do you want to overwrite it?")
+            choice = messagebox.askyesnocancel(
+                "Error", f"Folder '{new_name}' already exists. Do you want to overwrite it?"
+            )
             if choice is None:
                 shutil.rmtree(old_path)
                 return
@@ -60,15 +74,46 @@ def rename_folder(folder_path):
         shutil.rmtree(old_path)
         return
 
+def browse_file():
+    file_path = filedialog.askopenfilename(
+        initialdir="", title="Select Zip File", filetypes=[("Zip Files", "*.zip")]
+    )
+    if file_path:
+        folder = os.path.join(
+            os.path.expanduser("~"), "AppData", "Roaming", "Minecraft Legends", "internalStorage", "premium_cache",
+            "resource_packs"
+        )
+        with zipfile.ZipFile(file_path, "r") as zip_ref:
+            zip_ref.extractall(folder)
+        if not rename_folder(folder):
+            return
+
+def show_standard_tab():
+    notebook.select(0)
+
+def show_browse_tab():
+    notebook.select(1)
+
 root = tk.Tk()
 root.geometry("400x200")
 root.title("Legend's Wardrobe")
 root.iconbitmap(default=get_resource_path("icon.ico"))
 
-tk.Label(root, text="What hero would you like to install?").pack(anchor=tk.W)
+notebook = ttk.Notebook(root)
+notebook.pack(fill=tk.BOTH, expand=True)
+
+standard_tab = ttk.Frame(notebook, width=400, height=180)
+tk.Label(standard_tab, text="What hero would you like to install?").pack(anchor=tk.W)
 choice_var = tk.IntVar(value=1)
-tk.Radiobutton(root, text="Miclee hero", variable=choice_var, value=1).pack(anchor=tk.W)
-tk.Radiobutton(root, text="Jeb_ hero", variable=choice_var, value=2).pack(anchor=tk.W)
-tk.Button(root, text="Install Hero", command=install_hero).pack(anchor=tk.W)
+tk.Radiobutton(standard_tab, text="Miclee skin", variable=choice_var, value=1).pack(anchor=tk.W)
+tk.Radiobutton(standard_tab, text="Jeb_ skin", variable=choice_var, value=2).pack(anchor=tk.W)
+tk.Button(standard_tab, text="Install Hero", command=install_hero).pack(anchor=tk.W)
+
+browse_tab = ttk.Frame(notebook, width=400, height=180)
+tk.Label(browse_tab, text="Select a ZIP file to install:").pack()
+tk.Button(browse_tab, text="Browse", command=browse_file).pack()
+
+notebook.add(standard_tab, text="Standard")
+notebook.add(browse_tab, text="Browse")
 
 root.mainloop()
